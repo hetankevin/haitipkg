@@ -109,7 +109,7 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
   }
 
   # seasonal beta and foi
-  beta <- "double mybeta = exp(log(beta1*seas1 + beta2*seas2 + beta3*seas3 + beta4*seas4 + beta5*seas5 + beta6*seas6) - betat*t); \n "
+  beta <- "double mybeta = exp(log(beta1*seas1 + beta2*seas2 + beta3*seas3 + beta4*seas4 + beta5*seas5 + beta6*seas6) - betat*(t-2010)); \n "
   if (depts > 1) {
     foi_i <- c("I", paste0("+I", 1:depts)) %>%
       paste(collapse = "")
@@ -273,7 +273,7 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
 
     ## parameter names
     param_names <- c("rho", "tau", "beta1", "beta2", "beta3", "beta4", "beta5",
-                     "beta6", "nu", "gamma", "sigma", "theta0", "alpha", "mu", "delta",
+                     "beta6", "betat", "nu", "gamma", "sigma", "theta0", "alpha", "mu", "delta",
                      "sig_sq", "S_0","E_0","I_0","A_0","R_0", "pop_0", "kappa",
                      paste0("S", 1:depts, "_0"),
                      paste0("E", 1:depts, "_0"),
@@ -297,7 +297,7 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
 
     ## parameter names
     param_names <- c("rho", "tau", "beta1", "beta2", "beta3", "beta4", "beta5",
-                     "beta6", "gamma", "sigma", "theta0", "alpha", "mu", "delta",
+                     "beta6", "betat", "gamma", "sigma", "theta0", "alpha", "mu", "delta",
                      "nu", "pop_0", "sig_sq",
                      "S_0","E_0","I_0","A_0","R_0")
 
@@ -307,9 +307,9 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
 
   ## partrans
   param_trans <- pomp::parameter_trans(
-    log = c("beta1", "beta2", "beta3", "beta4", "beta5", "beta6",
+    log = c("beta1", "beta2", "beta3", "beta4", "beta5", "beta6", 
             "tau", "sigma", "gamma", "mu", "delta", "alpha", "sig_sq"),
-    logit = c("rho", "nu", "theta0"),
+    logit = c("rho", "nu", "theta0", "betat"),
     barycentric = c("S_0", "E_0", "I_0", "A_0", "R_0")
   )
 
@@ -338,6 +338,8 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
     model1@t0 <- 0
     pomp::coef(model1) <- unlist(epi_pars) ## epidemic period
   }
-
+  pomp::coef(model1)['betat'] = 1e-10
+  #pomp::coef(model1)['rho'] = 7e10
+    
   return(model1)
 }
