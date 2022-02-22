@@ -108,8 +108,8 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
       paste(collapse = "")
   }
 
-  # seasonal beta and foi
-  beta <- "double mybeta = exp(log(beta1*seas1 + beta2*seas2 + beta3*seas3 + beta4*seas4 + beta5*seas5 + beta6*seas6) - (1/10*(-betat))*((t-215)/430); \n "
+  # seasonal beta and foi #1/10*(-betat)
+  beta <- "double mybeta = exp(log(beta1*seas1 + beta2*seas2 + beta3*seas3 + beta4*seas4 + beta5*seas5 + beta6*seas6) - (betat)*((t-215)/(430-215))); \n "
   if (depts > 1) {
     foi_i <- c("I", paste0("+I", 1:depts)) %>%
       paste(collapse = "")
@@ -337,7 +337,7 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
     model1@t0 <- 0
     pomp::coef(model1) <- unlist(epi_pars) ## epidemic period
   }
-  pomp::coef(model1)['betat'] = 1e-10
+  pomp::coef(model1)['betat'] = 0 #1e-10
   #pomp::coef(model1)['rho'] = 7e10
     
   return(model1)
