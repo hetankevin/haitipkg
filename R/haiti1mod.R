@@ -109,7 +109,7 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
   }
 
   # seasonal beta and foi
-  beta <- "double mybeta = exp(log(beta1*seas1 + beta2*seas2 + beta3*seas3 + beta4*seas4 + beta5*seas5 + beta6*seas6) - betat*(t-2010)); \n "
+  beta <- "double mybeta = exp(log(beta1*seas1 + beta2*seas2 + beta3*seas3 + beta4*seas4 + beta5*seas5 + beta6*seas6) - (1/10*(-betat))*((t-215)/430); \n "
   if (depts > 1) {
     foi_i <- c("I", paste0("+I", 1:depts)) %>%
       paste(collapse = "")
@@ -307,9 +307,8 @@ haiti1mod <- function(vacscen = 'id0', period = 'epidemic') {
 
   ## partrans
   param_trans <- pomp::parameter_trans(
-    log = c("beta1", "beta2", "beta3", "beta4", "beta5", "beta6", 
-            "tau", "sigma", "gamma", "mu", "delta", "alpha", "sig_sq"),
-    logit = c("rho", "nu", "theta0", "betat"),
+    log = c("tau", "sigma", "gamma", "mu", "delta", "alpha", "sig_sq"),
+    logit = c("rho", "nu", "theta0"), 
     barycentric = c("S_0", "E_0", "I_0", "A_0", "R_0")
   )
 
