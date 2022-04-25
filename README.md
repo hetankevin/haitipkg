@@ -2,6 +2,8 @@
 
 ## TODO: 
 
+- [ ] Make [R/get_elimProbs.R](R/get_elimProbs.R) to work for model 2.
+- [ ] Make project_from_filtering compatable with spatPomp/panelPomp models.
 - [ ] Always check/update function documentation. 
 - [ ] Fix package dependencies:
   - [ ] Make sure that the package depends on `pomp`, but possibly also `panelPomp`, and `spatPomp`.
@@ -11,7 +13,8 @@
 Warning: replacing previous import ‘pomp::mcap’ by ‘spatPomp::mcap’ when loading ‘haitipkg’
 ```
 I don't think anyone is using either of these functions, but it should be looked at more closely so that other users don't get this warning.
-- [ ] Document the datasets in the pakage.
+- [ ] Document the datasets in the package.
+- [ ] Some parameters missing from documentation of the function `covars`
 
 ### Model 1:
 
@@ -24,7 +27,7 @@ I don't think anyone is using either of these functions, but it should be looked
 
 ### Model 3:
 
-- [ ] Create function `fit_haiti3()` that will fit Model 3 from scratch. 
+- [ ] Refine and test `project_from_filter2`, and delete `project_from_filter`.
 - [ ] Combine `fit_haiti{i}()` and `est_logLik{i}()` for each $i$ into single functions `fit_haiti()` and `est_logLik()`, respectively. 
 
 
@@ -35,3 +38,4 @@ I don't think anyone is using either of these functions, but it should be looked
 - [x] Create function `fit_haiti2()` that will fit Model 3 from scratch. 
 - [x] Create function `est_logLik2()` that will estimate the log-likelihood for model 2.
 - [x] Create function `est_logLik3()` that will estimate the log-likelihood for model 3.
+- [x] Create function `fit_haiti3()` that will fit Model 3 from scratch. 
